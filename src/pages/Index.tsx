@@ -53,7 +53,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="bg-slate-900 text-white overflow-x-hidden">
+    <div ref={containerRef} className="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 text-slate-800 overflow-x-hidden min-h-screen">
       <MagneticCursor />
       <Navigation />
       <Hero />

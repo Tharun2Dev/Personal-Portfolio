@@ -1,48 +1,73 @@
 
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 const About = () => {
+  const aboutRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const about = aboutRef.current;
+    if (!about) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      about.children,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: about,
+          start: "top 80%",
+          end: "bottom 20%",
+        },
+      }
+    );
+  }, []);
+
   return (
-    <section id="about" className="py-20 relative">
+    <section id="about" className="py-20 bg-white">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 animate-on-scroll">
-            About <span className="text-blue-500">Me</span>
+        <div ref={aboutRef} className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 animate-on-scroll text-slate-800">
+            About <span className="text-blue-600">Me</span>
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-on-scroll">
-              <div className="relative">
-                <div className="w-80 h-80 mx-auto bg-gradient-to-br from-blue-600 to-purple-600 rounded-full p-1">
-                  <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center">
-                    <div className="text-8xl font-bold text-blue-500">TC</div>
-                  </div>
+              <div className="w-80 h-80 mx-auto bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+                <div className="w-72 h-72 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full flex items-center justify-center">
+                  <span className="text-6xl">👨‍💻</span>
                 </div>
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-500 rounded-full opacity-20 animate-pulse"></div>
-                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-purple-500 rounded-full opacity-20 animate-pulse"></div>
               </div>
             </div>
-            
-            <div className="animate-on-scroll">
-              <p className="text-lg text-slate-300 mb-6 leading-relaxed">
-                Motivated and detail-oriented graduate with a strong interest in software development. 
-                Eager to learn and grow within the field, with a passion for problem-solving and a 
-                commitment to delivering quality results.
+
+            <div className="space-y-6 animate-on-scroll">
+              <h3 className="text-2xl font-bold text-slate-800">Full Stack Developer</h3>
+              <p className="text-slate-600 leading-relaxed">
+                I'm a passionate developer with expertise in modern web technologies. 
+                I love creating efficient, scalable solutions that solve real-world problems.
               </p>
               
-              <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-                Highly adaptable and driven by a desire to contribute to innovative projects. 
-                Seeking an opportunity to leverage my skills and develop my career in the software industry.
+              <p className="text-slate-600 leading-relaxed">
+                With experience in both frontend and backend development, I enjoy working 
+                with React, Node.js, Python, and various databases. I'm always eager to 
+                learn new technologies and take on challenging projects.
               </p>
 
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-slate-800/50 p-4 rounded-lg backdrop-blur-sm">
-                  <h3 className="text-blue-500 font-semibold mb-2">Education</h3>
-                  <p className="text-sm text-slate-300">BE in ECE</p>
-                  <p className="text-xs text-slate-400">Sapthagiri College</p>
+              <div className="grid grid-cols-2 gap-4 pt-4">
+                <div className="magnetic p-4 bg-blue-50 rounded-lg border border-blue-100">
+                  <h4 className="font-semibold text-slate-800 mb-2">Frontend</h4>
+                  <p className="text-sm text-slate-600">React, Vue, Angular, TypeScript</p>
                 </div>
-                <div className="bg-slate-800/50 p-4 rounded-lg backdrop-blur-sm">
-                  <h3 className="text-blue-500 font-semibold mb-2">Location</h3>
-                  <p className="text-sm text-slate-300">Bangalore</p>
-                  <p className="text-xs text-slate-400">India</p>
+                <div className="magnetic p-4 bg-purple-50 rounded-lg border border-purple-100">
+                  <h4 className="font-semibold text-slate-800 mb-2">Backend</h4>
+                  <p className="text-sm text-slate-600">Node.js, Python, PostgreSQL</p>
                 </div>
               </div>
             </div>

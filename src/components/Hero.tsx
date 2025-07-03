@@ -4,78 +4,60 @@ import { gsap } from "gsap";
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const hero = heroRef.current;
-    if (!hero) return;
+    const text = textRef.current;
+    
+    if (!hero || !text) return;
 
-    // Parallax effect for background
-    gsap.to(".hero-bg", {
-      yPercent: -50,
-      ease: "none",
-      scrollTrigger: {
-        trigger: hero,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
+    // Animate text elements
+    gsap.fromTo(
+      text.children,
+      { y: 100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, stagger: 0.3, ease: "power3.out", delay: 0.5 }
+    );
 
-    // Floating animation for profile elements
-    gsap.to(".floating", {
-      y: "random(-20, 20)",
-      rotation: "random(-5, 5)",
-      duration: "random(2, 4)",
+    // Floating animation for the hero section
+    gsap.to(hero, {
+      y: -20,
+      duration: 3,
       repeat: -1,
       yoyo: true,
-      ease: "sine.inOut",
-      stagger: 0.2,
+      ease: "power2.inOut"
     });
   }, []);
 
   return (
-    <section ref={heroRef} className="min-h-screen relative flex items-center justify-center overflow-hidden">
-      {/* Animated background */}
-      <div className="hero-bg absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900"></div>
-      
-      {/* Floating particles */}
-      <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="floating absolute w-2 h-2 bg-blue-500/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-            }}
-          />
-        ))}
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-6 text-center relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 fade-in-up">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-              Tharun C
-            </span>
+      <div ref={heroRef} className="container mx-auto px-6 text-center relative z-10">
+        <div ref={textRef} className="space-y-6">
+          <h1 className="text-5xl md:text-7xl font-bold text-slate-800 fade-in-up">
+            Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Tharun</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-slate-300 mb-8 fade-in-up">
-            Full Stack Developer & ML Engineer
+          <h2 className="text-2xl md:text-3xl text-slate-600 fade-in-up">
+            Full Stack Developer & AI Enthusiast
+          </h2>
+          
+          <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed fade-in-up">
+            Crafting digital experiences with modern technologies and innovative solutions. 
+            Passionate about creating scalable applications that make a difference.
           </p>
           
-          <p className="text-lg text-slate-400 mb-12 max-w-2xl mx-auto fade-in-up">
-            Passionate software developer with expertise in modern web technologies,
-            machine learning, and innovative problem-solving approaches.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center fade-in-up">
-            <button className="magnetic px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 fade-in-up">
+            <button className="magnetic px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
               View My Work
             </button>
-            <button className="magnetic px-8 py-4 border border-blue-500 text-blue-500 rounded-full font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-105">
-              Get In Touch
+            <button className="magnetic px-8 py-4 border-2 border-slate-300 text-slate-700 rounded-full font-semibold hover:bg-slate-50 transition-all duration-300 transform hover:scale-105">
+              Download Resume
             </button>
           </div>
         </div>
@@ -83,8 +65,8 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-blue-500 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-blue-500 rounded-full mt-2 animate-pulse"></div>
+        <div className="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-slate-400 rounded-full mt-2"></div>
         </div>
       </div>
     </section>
